@@ -1,0 +1,17 @@
+<nav class="full-height">
+
+  <h2>Menu</h2>
+
+  <ul>
+    <li>
+      <a routerLink="/addCategory">Add Category</a>
+      <hr>
+    </li>
+    <h3>Categories</h3>
+    <li *ngFor="let category of categories">
+      <a href="/taskboard/{{category}}">{{category}}</a>
+    </li>
+  </ul>
+
+
+</nav>

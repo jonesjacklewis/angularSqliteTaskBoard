@@ -1,0 +1,20 @@
+<form [formGroup]="editTaskForm" (ngSubmit)="onSubmit()">
+
+  <label for="taskHeading">Task Heading: </label>
+  <input type="text" id="taskHeading" name="taskHeading" formControlName="taskHeading" > <br>
+
+  <label for="taskBody">Task Body: </label>
+
+  <textarea name="taskBody" id="taskBody" formControlName="taskBody" cols="30" rows="10"></textarea> <br>
+
+  <label for="taskCategory">Task Category: </label>
+  <select name="taskCategory" id="taskCategory" formControlName="taskCategory">
+    <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+  </select> <br>
+
+  <label for="taskComplete">Task Complete: </label>
+  <input type="checkbox" name="taskComplete" id="taskComplete" formControlName="taskComplete">
+
+  <button class="button" type="submit">Edit Task</button>
+
+</form>

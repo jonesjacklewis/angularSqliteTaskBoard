@@ -1,0 +1,18 @@
+<div class="taskboard" style="width: 75%">
+  <h2>{{boardname}}</h2>
+  <div class="task" *ngFor="let task of tasks">
+    <h2 class="taskHeading">{{task["heading"]}}</h2>
+    <p class="taskBody">{{task["body"]}}</p>
+    <p><span style="font-weight:bold;">Category: </span> {{task["category"]}}</p>
+    <p><span style="font-weight:bold;">Is Complete: </span> {{task["complete"] == 1 ? "Yes" : "No"}}</p>
+    <button (click)="delete(task['id'])">Delete</button>
+    <button (click)="edit(task['id'])">Edit</button>
+
+
+  </div>
+
+
+</div>
+
+
+<app-add-task style="width: 75%"></app-add-task>
