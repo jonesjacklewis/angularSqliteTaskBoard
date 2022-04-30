@@ -13,6 +13,7 @@ export class AddCategoryComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    // This method does not need code, but is needed for the component to work.
   }
 
   addCategoryForm = this.formBuilder.group({
