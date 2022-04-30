@@ -1,9 +1,5 @@
 export class Requests{
 
-  constructor(){}
-
-
-
   httpGet(url: string): any{
 
     const xmlHttp = new XMLHttpRequest();
