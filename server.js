@@ -16,9 +16,9 @@ app.use(
   }),
 )
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   const sql = 'SELECT * FROM tasks;'
-  db.all(sql, (err, rows) => {
+  db.all(sql, (_err, rows) => {
     const users = []
 
     rows.forEach((row) => {
@@ -29,10 +29,10 @@ app.get('/', (req, res) => {
   })
 })
 
-app.get('/getCategories', (req, res) => {
+app.get('/getCategories', (_req, res) => {
   const sql = 'SELECT name FROM categories ORDER BY name ASC'
 
-  db.all(sql, (err, rows) => {
+  db.all(sql, (_err, rows) => {
     const categories = []
 
     rows.forEach((row) => {
@@ -48,7 +48,7 @@ app.get('/getTasks/:boardname', (req, res) => {
 
   const sql = 'SELECT * FROM tasks WHERE category = ? ORDER BY heading ASC'
 
-  db.all(sql, boardname, (err, rows) => {
+  db.all(sql, boardname, (_err, rows) => {
     const tasks = []
 
     rows.forEach((row) => {
@@ -65,7 +65,7 @@ app.post('/addCategory', (req, res) => {
     db.run(
       'INSERT INTO categories VALUES (null, ?)',
       categoryName,
-      (err, rows) => {
+      (err, _rows) => {
         if (err) {
           console.log(`${categoryName} already in table.`)
           res.end()
@@ -91,7 +91,7 @@ app.post('/addTask', (req, res) => {
       taskBody,
       taskCategory,
       taskComplete,
-      (err, rows) => {
+      (err, _rows) => {
         if (err) {
           console.log(`${taskHeading} already in table.`)
           res.end()
@@ -111,7 +111,7 @@ app.delete('/deleteTask/:id', (req, res) => {
   const id = req.params.id
 
   try {
-    db.run('DELETE FROM tasks WHERE id = ?', id, (err, rows) => {
+    db.run('DELETE FROM tasks WHERE id = ?', id, (err, _rows) => {
       if (err) {
         console.log(`${id} was not able to be removed.`)
         console.error(err)
@@ -131,7 +131,7 @@ app.get("/getTask/:id", (req, res) => {
   const id = req.params.id;
 
   try{
-    db.all("SELECT * from tasks WHERE id = ?", id, (err, rows) => {
+    db.all("SELECT * from tasks WHERE id = ?", id, (_err, rows) => {
       if(rows.length == 1){
         res.send(JSON.stringify(rows[0]));
       }else{
@@ -158,7 +158,7 @@ app.post("/editTask", (req, res) => {
   const sql = "UPDATE tasks SET heading = ?, body = ?, category = ?, complete = ? WHERE id = ?";
 
   try{
-    db.run(sql, taskHeading, taskBody, taskCategory, taskComplete, taskId, (err, rows) => {
+    db.run(sql, taskHeading, taskBody, taskCategory, taskComplete, taskId, (err, _rows) => {
       if(err){
         console.log(`Error updating ${taskId}.`);
       }
