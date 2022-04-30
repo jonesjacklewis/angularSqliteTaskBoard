@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import  { AddCategoryComponent } from './add-category/add-category.component';
 import { TaskboardComponent } from './taskboard/taskboard.component';
