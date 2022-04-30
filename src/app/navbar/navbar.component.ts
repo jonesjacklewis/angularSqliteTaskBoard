@@ -8,7 +8,6 @@ import { Requests } from 'src/custom-methods/requests';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit(): void {
     this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/getCategories"));
