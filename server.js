@@ -1,137 +1,124 @@
-const express = require('express')
-const sqlite3 = require('sqlite3').verbose()
-const cors = require('cors')
-const bodyParser = require('body-parser')
+const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-const app = express()
-const port = process.env.PORT || 4000
+const app = express();
+const port = process.env.PORT || 4000;
 
-const db = new sqlite3.Database('db/taskboard.db')
+const db = new sqlite3.Database('db/taskboard.db');
 
-app.use(cors())
-app.use(bodyParser.json())
+app.use(cors());
+app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
   }),
-)
-
-app.get('/', (_req, res) => {
-  const sql = 'SELECT * FROM tasks;'
-  db.all(sql, (_err, rows) => {
-    const users = []
-
-    rows.forEach((row) => {
-      users.push(row)
-    })
-
-    res.send(JSON.stringify(users))
-  })
-})
+);
 
 app.get('/getCategories', (_req, res) => {
-  const sql = 'SELECT name FROM categories ORDER BY name ASC'
+  const sql = 'SELECT name FROM categories ORDER BY name ASC';
 
   db.all(sql, (_err, rows) => {
-    const categories = []
+    const categories = [];
 
     rows.forEach((row) => {
-      categories.push(row.name)
+      categories.push(row.name);
     })
 
-    res.send(JSON.stringify(categories))
+    res.send(JSON.stringify(categories));
   })
 })
 
 app.get('/getTasks/:boardname', (req, res) => {
-  const boardname = req.params.boardname
+  const boardname = req.params.boardname;
 
-  const sql = 'SELECT * FROM tasks WHERE category = ? ORDER BY heading ASC'
+  const sql = 'SELECT * FROM tasks WHERE category = ? ORDER BY heading ASC';
 
   db.all(sql, boardname, (_err, rows) => {
-    const tasks = []
+    const tasks = [];
 
     rows.forEach((row) => {
-      tasks.push(row)
+      tasks.push(row);
     })
 
-    res.send(JSON.stringify(tasks))
+    res.send(JSON.stringify(tasks));
   })
 })
 
 app.post('/addCategory', (req, res) => {
-  const categoryName = req.body.categoryName
+  const categoryName = req.body.categoryName;
+  const sql = 'INSERT INTO categories VALUES (null, ?)';
   try {
     db.run(
-      'INSERT INTO categories VALUES (null, ?)',
+      sql,
       categoryName,
       (err, _rows) => {
         if (err) {
-          console.log(`${categoryName} already in table.`)
-          res.end()
+          console.log(`${categoryName} already in table.`);
+          res.end();
         }
       },
     )
   } catch {
-    console.log(`${categoryName} already in table.`)
+    console.log(`${categoryName} already in table.`);
   } finally {
-    res.end()
+    res.end();
   }
 })
 
 app.post('/addTask', (req, res) => {
-  const taskHeading = req.body.taskHeading
-  const taskBody = req.body.taskBody
-  const taskCategory = req.body.taskCategory
-  const taskComplete = req.body.taskComplete
+  const taskHeading = req.body.taskHeading;
+  const taskBody = req.body.taskBody;
+  const taskCategory = req.body.taskCategory;
+  const taskComplete = req.body.taskComplete;
+  const sql = 'INSERT INTO tasks VALUES (null, ?, ?, ?, ?)';
   try {
     db.run(
-      'INSERT INTO tasks VALUES (null, ?, ?, ?, ?)',
+      sql,
       taskHeading,
       taskBody,
       taskCategory,
       taskComplete,
       (err, _rows) => {
         if (err) {
-          console.log(`${taskHeading} already in table.`)
-          res.end()
-        }else{
-          console.log("here");
+          console.log(`${taskHeading} already in table.`);
+          res.end();
         }
       },
     )
   } catch {
-    console.log(`${taskHeading} already in table.`)
+    console.log(`${taskHeading} already in table.`);
   } finally {
-    res.end()
+    res.end();
   }
 })
 
 app.delete('/deleteTask/:id', (req, res) => {
-  const id = req.params.id
-
+  const id = req.params.id;
+  const sql = 'DELETE FROM tasks WHERE id = ?';
   try {
-    db.run('DELETE FROM tasks WHERE id = ?', id, (err, _rows) => {
+    db.run(sql, id, (err, _rows) => {
       if (err) {
-        console.log(`${id} was not able to be removed.`)
-        console.error(err)
-        res.end()
+        console.log(`${id} was not able to be removed.`);
+        console.error(err);
+        res.end();
       }
     })
   } catch (err){
-    console.log(`${id} was not able to be removed.`)
-    console.error(err)
-    res.end()
+    console.log(`${id} was not able to be removed.`);
+    console.error(err);
+    res.end();
   } finally {
-    res.end()
+    res.end();
   }
 })
 
 app.get("/getTask/:id", (req, res) => {
   const id = req.params.id;
-
+  const sql = "SELECT * from tasks WHERE id = ?";
   try{
-    db.all("SELECT * from tasks WHERE id = ?", id, (_err, rows) => {
+    db.all(sql, id, (_err, rows) => {
       if(rows.length == 1){
         res.send(JSON.stringify(rows[0]));
       }else{
@@ -172,5 +159,5 @@ app.put("/editTask", (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
 })
