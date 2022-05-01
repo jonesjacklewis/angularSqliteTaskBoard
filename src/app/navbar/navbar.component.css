@@ -40,3 +40,8 @@ nav a:hover {
 nav a.active {
   background-color: black;
 }
+
+.selected{
+  color: white !important;
+  background-color: black !important;
+}
