@@ -146,7 +146,7 @@ app.get("/getTask/:id", (req, res) => {
 
 })
 
-app.post("/editTask", (req, res) => {
+app.put("/editTask", (req, res) => {
   const taskId = req.body.taskId;
   const taskHeading = req.body.taskHeading;
   const taskBody = req.body.taskBody;
