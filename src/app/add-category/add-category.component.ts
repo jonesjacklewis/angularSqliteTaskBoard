@@ -35,7 +35,7 @@ export class AddCategoryComponent implements OnInit {
       window.location.reload();
 
     }else{
-      window.alert("Must Enter a Valid Category Name!")
+      window.alert("Must Enter a Valid Category Name!");
     }
 
   }
