@@ -14,21 +14,21 @@ export class EditTaskComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/getCategories"));
+    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/categories"));
     this.taskId = Number(this.activatedRoute.snapshot.url[1].toString());
 
     if(
       this.taskId < 0 ||
       isNaN(this.taskId) ||
-      JSON.parse(this.requests.httpGet(`http://localhost:4000/getTask/${this.taskId}`))[0] != undefined
+      JSON.parse(this.requests.httpGet(`http://localhost:4000/task/${this.taskId}`))[0] != undefined
     ){
       window.alert("Invalid ID");
       window.location.href = "/taskboard/Urgent";
     }else{
-      this.taskHeading = JSON.parse(this.requests.httpGet(`http://localhost:4000/getTask/${this.taskId}`)).heading;
-      this.taskBody = JSON.parse(this.requests.httpGet(`http://localhost:4000/getTask/${this.taskId}`)).body;
-      this.taskCategory = JSON.parse(this.requests.httpGet(`http://localhost:4000/getTask/${this.taskId}`)).category;
-      this.taskComplete = JSON.parse(this.requests.httpGet(`http://localhost:4000/getTask/${this.taskId}`)).complete == 1;
+      this.taskHeading = JSON.parse(this.requests.httpGet(`http://localhost:4000/task/${this.taskId}`)).heading;
+      this.taskBody = JSON.parse(this.requests.httpGet(`http://localhost:4000/task/${this.taskId}`)).body;
+      this.taskCategory = JSON.parse(this.requests.httpGet(`http://localhost:4000/task/${this.taskId}`)).category;
+      this.taskComplete = JSON.parse(this.requests.httpGet(`http://localhost:4000/task/${this.taskId}`)).complete == 1;
 
       this.editTaskForm.setValue(
         {
@@ -80,7 +80,7 @@ export class EditTaskComponent implements OnInit {
       this.editTaskForm.value.taskBody.length > 0 &&
       this.editTaskForm.value.taskCategory.length > 0
     ){
-      this.requests.httpPost("http://localhost:4000/editTask", {
+      this.requests.httpPut("http://localhost:4000/task", {
         taskId: this.taskId,
         taskHeading: this.editTaskForm.value.taskHeading,
         taskBody: this.editTaskForm.value.taskBody,

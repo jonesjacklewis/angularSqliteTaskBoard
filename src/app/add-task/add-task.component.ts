@@ -14,7 +14,7 @@ export class AddTaskComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
-    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/getCategories"));
+    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/categories"));
   }
 
   addTaskForm = this.formBuilder.group({
@@ -47,7 +47,7 @@ export class AddTaskComponent implements OnInit {
       this.addTaskForm.value.taskBody.length > 0 &&
       this.addTaskForm.value.taskCategory.length > 0
     ){
-      this.requests.httpPost("http://localhost:4000/addTask", {
+      this.requests.httpPost("http://localhost:4000/task", {
         taskHeading: this.addTaskForm.value.taskHeading,
         taskBody: this.addTaskForm.value.taskBody,
         taskCategory: this.addTaskForm.value.taskCategory,

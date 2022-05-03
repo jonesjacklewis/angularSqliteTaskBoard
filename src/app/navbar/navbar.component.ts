@@ -10,7 +10,7 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/getCategories"));
+    this.categories = JSON.parse(this.requests.httpGet("http://localhost:4000/categories"));
   }
 
   requests = new Requests();

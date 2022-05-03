@@ -14,7 +14,7 @@ export class TaskboardComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       this.boardname = params["boardname"];
-      this.tasks = JSON.parse(this.requests.httpGet(`http://localhost:4000/getTasks/${this.boardname}`));
+      this.tasks = JSON.parse(this.requests.httpGet(`http://localhost:4000/tasks/${this.boardname}`));
     })
   }
 
@@ -25,7 +25,7 @@ export class TaskboardComponent implements OnInit {
 
 
   delete(id: number){
-    this.requests.httpDelete(`http://localhost:4000/deleteTask/${id}`);
+    this.requests.httpDelete(`http://localhost:4000/task/${id}`);
     window.location.reload();
   }
 

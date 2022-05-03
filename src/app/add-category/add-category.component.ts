@@ -28,7 +28,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryName = this.addCategoryForm.value.categoryName;
 
     if(this.categoryName.length > 0){
-      this.requests.httpPost("http://localhost:4000/addCategory", {
+      this.requests.httpPost("http://localhost:4000/category", {
         categoryName: this.categoryName
       });
 

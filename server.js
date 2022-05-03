@@ -16,7 +16,7 @@ app.use(
   }),
 );
 
-app.get('/getCategories', (_req, res) => {
+app.get('/categories', (_req, res) => {
   const sql = 'SELECT name FROM categories ORDER BY name ASC';
 
   db.all(sql, (_err, rows) => {
@@ -30,7 +30,7 @@ app.get('/getCategories', (_req, res) => {
   })
 })
 
-app.get('/getTasks/:boardname', (req, res) => {
+app.get('/tasks/:boardname', (req, res) => {
   const boardname = req.params.boardname;
 
   const sql = 'SELECT * FROM tasks WHERE category = ? ORDER BY heading ASC';
@@ -46,7 +46,7 @@ app.get('/getTasks/:boardname', (req, res) => {
   })
 })
 
-app.post('/addCategory', (req, res) => {
+app.post('/category', (req, res) => {
   const categoryName = req.body.categoryName;
   const sql = 'INSERT INTO categories VALUES (null, ?)';
   try {
@@ -67,7 +67,7 @@ app.post('/addCategory', (req, res) => {
   }
 })
 
-app.post('/addTask', (req, res) => {
+app.post('/task', (req, res) => {
   const taskHeading = req.body.taskHeading;
   const taskBody = req.body.taskBody;
   const taskCategory = req.body.taskCategory;
@@ -94,7 +94,7 @@ app.post('/addTask', (req, res) => {
   }
 })
 
-app.delete('/deleteTask/:id', (req, res) => {
+app.delete('/task/:id', (req, res) => {
   const id = req.params.id;
   const sql = 'DELETE FROM tasks WHERE id = ?';
   try {
@@ -114,7 +114,7 @@ app.delete('/deleteTask/:id', (req, res) => {
   }
 })
 
-app.get("/getTask/:id", (req, res) => {
+app.get("/task/:id", (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * from tasks WHERE id = ?";
   try{
@@ -133,7 +133,7 @@ app.get("/getTask/:id", (req, res) => {
 
 })
 
-app.put("/editTask", (req, res) => {
+app.put("/task", (req, res) => {
   const taskId = req.body.taskId;
   const taskHeading = req.body.taskHeading;
   const taskBody = req.body.taskBody;
